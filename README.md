@@ -1,4 +1,5 @@
 # Demo Web Shop Selenium Automation Framework
+![Selenium Tests](https://github.com/Devendra8003/DemoWebShop_Selenium/actions/workflows/selenium-tests.yml/badge.svg)
 
 ## Project Overview
 
