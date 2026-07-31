@@ -62,13 +62,22 @@ class CartPage:
     # OPEN CART
     # =========================
 
-    def open_cart(self):
-
-        self.wait.until(
-            EC.element_to_be_clickable(
-                self.CART_LINK
+  def open_cart(self):
+    # Wait for the "added to cart" banner to disappear first
+    try:
+        WebDriverWait(self.driver, 5).until(
+            EC.invisibility_of_element_located(
+                (By.CSS_SELECTOR, "div.bar-notification.success")
             )
-        ).click()
+        )
+    except Exception:
+        pass
+
+    cart_link = self.wait.until(
+        EC.element_to_be_clickable(self.CART_LINK)
+    )
+    # JS click as a safety net in case something else still overlaps
+    self.driver.execute_script("arguments[0].click();", cart_link)
 
     # =========================
     # PRODUCT NAME
