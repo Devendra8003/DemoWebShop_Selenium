@@ -149,27 +149,11 @@ class CartPage:
         try:
 
             while True:
-
-                checkbox = self.driver.find_element(
-                    *self.REMOVE_CHECKBOX
-                )
-
-                checkbox.click()
-
-                self.driver.find_element(
-                    *self.UPDATE_CART
-                ).click()
-
-                WebDriverWait(
-                    self.driver,
-                    5
-                ).until(
-                    EC.presence_of_element_located(
-                        self.EMPTY_CART_MESSAGE
-                    )
-                )
-
-                break
+    checkbox = self.driver.find_element(*self.REMOVE_CHECKBOX)
+    checkbox.click()
+    self.driver.find_element(*self.UPDATE_CART).click()
+    WebDriverWait(...).until(...)
+    break        # ← this always runs after removing just ONE item
 
         except Exception:
 
