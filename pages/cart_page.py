@@ -141,20 +141,19 @@ class CartPage:
     # =========================
 
     def clear_cart(self):
+    self.driver.get("https://demowebshop.tricentis.com/cart")
 
-        self.driver.get(
-            "https://demowebshop.tricentis.com/cart"
-        )
-
+    while True:
         try:
-
-            while True:
-    checkbox = self.driver.find_element(*self.REMOVE_CHECKBOX)
-    checkbox.click()
-    self.driver.find_element(*self.UPDATE_CART).click()
-    WebDriverWait(...).until(...)
-    break        # ← this always runs after removing just ONE item
-
+            checkbox = self.driver.find_element(*self.REMOVE_CHECKBOX)
+            checkbox.click()
+            self.driver.find_element(*self.UPDATE_CART).click()
+            WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(self.EMPTY_CART_MESSAGE)
+            )
+        except Exception:
+            break   # no more checkboxes left = cart is fully empty
+            
         except Exception:
 
             pass
