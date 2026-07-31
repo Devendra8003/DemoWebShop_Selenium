@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+venv/
+.venv/
+
+# Test run artifacts (regenerated every run)
+screenshots/
+report.html
+*.html
+!README.md
+
+# Debug/scratch files sometimes dumped by selenium during runs
+page_source.html
+*_page.html
+*.png
+!docs/**/*.png
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
