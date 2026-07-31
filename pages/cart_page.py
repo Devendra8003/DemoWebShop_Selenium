@@ -62,22 +62,27 @@ class CartPage:
     # OPEN CART
     # =========================
 
-  def open_cart(self):
-    # Wait for the "added to cart" banner to disappear first
-    try:
-        WebDriverWait(self.driver, 5).until(
-            EC.invisibility_of_element_located(
-                (By.CSS_SELECTOR, "div.bar-notification.success")
-            )
-        )
-    except Exception:
-        pass
+    def open_cart(self):
 
-    cart_link = self.wait.until(
-        EC.element_to_be_clickable(self.CART_LINK)
-    )
-    # JS click as a safety net in case something else still overlaps
-    self.driver.execute_script("arguments[0].click();", cart_link)
+        # Wait for the "added to cart" banner to disappear first
+        try:
+            WebDriverWait(self.driver, 5).until(
+                EC.invisibility_of_element_located(
+                    (By.CSS_SELECTOR, "div.bar-notification.success")
+                )
+            )
+        except Exception:
+            pass
+
+        cart_link = self.wait.until(
+            EC.element_to_be_clickable(self.CART_LINK)
+        )
+
+        # JS click as a safety net in case something else still overlaps
+        self.driver.execute_script(
+            "arguments[0].click();",
+            cart_link
+        )
 
     # =========================
     # PRODUCT NAME
@@ -141,24 +146,38 @@ class CartPage:
     # =========================
 
     def clear_cart(self):
-    self.driver.get("https://demowebshop.tricentis.com/cart")
 
-    while True:
-        try:
-            checkbox = self.driver.find_element(*self.REMOVE_CHECKBOX)
-            checkbox.click()
-            self.driver.find_element(*self.UPDATE_CART).click()
-            WebDriverWait(self.driver, 5).until(
-                EC.presence_of_element_located(self.EMPTY_CART_MESSAGE)
-            )
-        except Exception:
-            break   # no more checkboxes left = cart is fully empty
-            
-        except Exception:
+        self.driver.get(
+            "https://demowebshop.tricentis.com/cart"
+        )
 
-            pass
+        while True:
 
-    
+            try:
+
+                checkbox = self.driver.find_element(
+                    *self.REMOVE_CHECKBOX
+                )
+
+                checkbox.click()
+
+                self.driver.find_element(
+                    *self.UPDATE_CART
+                ).click()
+
+                WebDriverWait(
+                    self.driver,
+                    5
+                ).until(
+                    EC.presence_of_element_located(
+                        self.EMPTY_CART_MESSAGE
+                    )
+                )
+
+            except Exception:
+
+                # no more checkboxes left = cart is fully empty
+                break
 
     # =========================
     # COUPON
